@@ -29,8 +29,6 @@ tokens = [
     'MULT',
     'DIV',
     'MOD',
-    'LOGICAL',
-    'RELATIONAL',
     'ATTR',
     'COLON',
     'BLOCK_START',
@@ -61,8 +59,6 @@ t_SUB = r'-'
 t_MULT = r'\*'
 t_DIV = r'/'
 t_MOD = r'%'
-t_LOGICAL = r'&&|\|\||!'
-t_RELATIONAL = r'==|!=|>=|<=|>|<'
 t_ATTR = r'='
 t_COLON = r':'
 t_BLOCK_START = r'{'
@@ -104,18 +100,20 @@ def t_error(t):
     t.lexer.skip(1)
 
 
-# controi o analisador lexico
+# constroi o analisador lexico
 lexer = lex.lex()
 
 data = '''
 main {
-    for(let i: int = 0; i < 3; i = i + 1) {
-        output(i);
-    }
+    output(4);
+    output(9 * 3);
 }
 '''
 
-# lexer.input(data)
+lexer.input(data)
 
-# for tok in lexer:
-#     print(tok)
+while True:
+    tok = lexer.token()
+    if not tok:
+        break      # No more input
+    print(tok)
