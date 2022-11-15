@@ -6,7 +6,9 @@
 import ply.yacc as yacc
 
 from must_lex import tokens
+
 myVariables = []
+
 def hasInArray(name):
     index = 0
     for v in myVariables:
@@ -33,7 +35,9 @@ def p_expr_operations(p):
          | expr DIV factor
          | expr MOD expr
     '''
-
+    if(hasInArray(p[1]) != -1):
+        p[1] = myVariables[hasInArray(p[1])]['value']
+        
     match p[2]:
         case '+':
             p[0] = p[1] + p[3]
@@ -56,7 +60,14 @@ def p_expr_relationals(p):
          | expr GREATER_EQUALS expr
          | expr SMALLER_EQUALS expr
     '''
-
+    if(hasInArray(p[1]) != -1):
+        match myVariables[hasInArray(p[1])]['type']:
+            case 'int':
+                p[1] = int(myVariables[hasInArray(p[1])]['value'])
+            case 'float':
+                p[1] = float(myVariables[hasInArray(p[1])]['value'])
+            case 'char':
+                p[1] = myVariables[hasInArray(p[1])]['value']
     match p[2]:
         case '==':
             p[0] = p[1] == p[3]
@@ -108,22 +119,34 @@ def p_decl(p):
     if len(p) == 5:
         myVariables.append({'name': p[2], 'type': p[4] , 'value': None})
     elif len(p) == 7:
-        myVariables.append({'name': p[2], 'type': p[4] , 'value': p[6]})
+        if len(p[6]) == 3:
+            myVariables.append({'name': p[2], 'type': p[4] , 'value': p[6][1]})
+        else: 
+            myVariables.append({'name': p[2], 'type': p[4] , 'value': p[6]})
 
-def p_other(p):
-    'term : VAR ATTR expr'
+
+def p_attr(p):
+    '''
+    term :  VAR ATTR LIT_INT
+          | VAR ATTR LIT_FLOAT
+          | VAR ATTR LIT_CHAR
+          | VAR ATTR expr  
+    '''
     if hasInArray(p[1]) != -1:
         if myVariables[hasInArray(p[1])]['type'] == 'char':
             myVariables[hasInArray(p[1])]['value'] = p[3][1]
         else: 
             myVariables[hasInArray(p[1])]['value'] = p[3]
 
+
 def p_expr_term(p):
     'expr : term'
     p[0] = p[1]
 
+
 def p_main(p):
     'term : MAIN BLOCK_START expr BLOCK_END'
+
 
 def p_term_literal_char(p):
     'term : LIT_CHAR'
@@ -134,9 +157,11 @@ def p_term_literal_var(p):
     'term : VAR'
     p[0] = p[1]
 
+
 def p_term_factor(p):
     'term : factor'
     p[0] = p[1]
+
 
 def p_term_literal_int(p):
     'factor : LIT_INT'
@@ -147,17 +172,11 @@ def p_term_literal_float(p):
     'factor : LIT_FLOAT'
     p[0] = float(p[1])
 
+
 def p_expr_factor(p):
     'factor : PAR_START expr PAR_END'
     p[0] = p[2]
 
-# se quisermos ir somando strings com variaveis ainda precisa implementar
-# def p_exprCont(p):
-#     '''
-#     exprcont : expr 
-#              | ASP expr ASP
-#              | exprcont SUM exprcont
-#     ''' 
 
 def p_output(p):
     '''
@@ -171,14 +190,36 @@ def p_output(p):
             if typeVar == 'int' or typeVar == 'float':
                 print(value)
             elif typeVar == 'char':
-                print(value[1])
+                print(value)
         else:
             print(p[3])
     else:
         if len(p) ==7: 
             print(p[4])
+
+def p_input(p):
+    '''
+    term : INPUT PAR_START VAR PAR_END
+    '''
+    if hasInArray(p[3]) != -1:
+        typeVar = myVariables[hasInArray(p[3])]['type']
+        inputValue = input("Digite o valor para " + myVariables[hasInArray(p[3])]['name'] +': ')  
+        if typeVar == 'int' and  type(int(inputValue)) is int:
+            myVariables[hasInArray(p[3])]['value'] =  int(inputValue) 
+        elif typeVar == 'float' and  type(float(inputValue)) is float:
+            myVariables[hasInArray(p[3])]['value'] =  float(inputValue)  
+        elif typeVar == 'char' and len(inputValue) == 3:    
+            myVariables[hasInArray(p[3])]['value'] = inputValue[1]
         else:
-            print
+            print("Não foi possível atribuir, erro de tipagem")
+
+def p_cond(p):
+    '''
+    term : IF PAR_START expr PAR_END BLOCK_START expr BLOCK_END
+         | IF PAR_START expr PAR_END BLOCK_START expr BLOCK_END ELSE BLOCK_START expr BLOCK_END
+    '''
+    #falta adicionar o funcionamento
+
 
 def p_line(p):
     '''
@@ -204,26 +245,28 @@ main {
     const PI: float = 3.14;
     output(PI);
     output("texto");
-    let variavel_apenas_declarada: int;
-    variavel_apenas_declarada = 4;
+    let variavel_apenas_declarada: char;
+    variavel_apenas_declarada = '4';
     output(variavel_apenas_declarada);
-}
+    let variavel_atribuida_por_input: int;
+    input(variavel_atribuida_por_input);
+    output(variavel_atribuida_por_input);
 '''
 
 data2 = '''
 main {
-    let variavelchar: char = '5';
-    if(char == 5){
-        variavelchar = '3;
-        output(variavelchar)
+    let variavel: int = 5;
+    if(variavel == 4){
+        variavel = 3;
+        output(variavel);
     }
 }
 '''
 
-print('ENTRADA: ', data1)
+print('ENTRADA: ', data2)
 
 
 print('\nSAIDA: ')
 
-result = parser.parse(data1)
+result = parser.parse(data2)
 

@@ -112,13 +112,27 @@ main {
     const PI: float = 3.14;
     output(PI);
     output("texto");
-    let variavel_apenas_declarada: int;
-    variavel_apenas_declarada = 4;
+    let variavel_apenas_declarada: char;
+    variavel_apenas_declarada = '4';
     output(variavel_apenas_declarada);
+    let variavel_atribuida_por_input: int;
+    input(variavel_atribuida_por_input);
+    output(variavel_atribuida_por_input);
 }
 '''
 
-lexer.input(data1)
+data2 = '''
+main {
+    let variavel: int = 5;
+    if(variavel == 5){
+        variavel = 3 + 4;
+        output(variavel)
+    }
+}
+'''
+
+
+lexer.input(data2)
 
 while True:
     tok = lexer.token()
