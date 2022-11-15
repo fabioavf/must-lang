@@ -22,7 +22,7 @@ reserved = {
 
 # lista dos tokens
 tokens = [
-    'MAIN_START',
+    # 'MAIN_START',
     'SEMICOLON',
     'SUM',
     'SUB',
@@ -48,11 +48,13 @@ tokens = [
     'GREATER',
     'SMALLER',
     'GREATER_EQUALS',
-    'SMALLER_EQUALS'
+    'SMALLER_EQUALS',
+    'ASP'
+
 ] + list(reserved.values())
 
 # regex para os tokens
-t_MAIN_START = r'main'
+# t_MAIN_START = r'main'
 t_SEMICOLON = r';'
 t_SUM = r'\+'
 t_SUB = r'-'
@@ -78,7 +80,7 @@ t_GREATER = r'>'
 t_SMALLER = r'<'
 t_GREATER_EQUALS = r'>='
 t_SMALLER_EQUALS = r'<='
-
+t_ASP = r'"'
 
 def t_VAR(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
@@ -103,14 +105,20 @@ def t_error(t):
 # constroi o analisador lexico
 lexer = lex.lex()
 
-data = '''
+data1 = '''
 main {
-    output(4);
-    output(9 * 3);
+    let variavel_char: char = '5';
+    output(variavel_char);
+    const PI: float = 3.14;
+    output(PI);
+    output("texto");
+    let variavel_apenas_declarada: int;
+    variavel_apenas_declarada = 4;
+    output(variavel_apenas_declarada);
 }
 '''
 
-lexer.input(data)
+lexer.input(data1)
 
 while True:
     tok = lexer.token()
