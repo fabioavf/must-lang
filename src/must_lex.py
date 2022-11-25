@@ -82,6 +82,7 @@ t_GREATER_EQUALS = r'>='
 t_SMALLER_EQUALS = r'<='
 t_ASP = r'"'
 
+
 def t_VAR(t):
     r'[a-zA-Z_][a-zA-Z0-9_]*'
     t.type = reserved.get(t.value, 'VAR')
@@ -123,10 +124,14 @@ main {
 
 data2 = '''
 main {
-    let variavel: int = 5;
-    if(variavel == 5){
-        variavel = 3 + 4;
-        output(variavel)
+    let variavel: int = 4;
+
+    if(variavel == 4) {
+        variavel = 3;
+        output(variavel);
+    } else {
+        variavel = 9;
+        output(variavel);
     }
 }
 '''
