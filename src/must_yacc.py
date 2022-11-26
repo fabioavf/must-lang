@@ -334,6 +334,135 @@ def p_term_par_expr(p):
     'term : PAR_START expr PAR_END'
     p[0] = f'({p[2]})'
 
+def p_error(t):
+    if t is not None :
+        print("Syntax error at '%s'" % t.value)
+
+
+
+parser = yacc.yacc()
+
+print('\n----- fim codigo -----\n')
+#entrada de teste para output de string comum
+data0 = '''
+    main {
+        output("Hello");
+        output("World");
+    }
+'''
+
+#entrada de teste para decl attr e output de variavel inteiras
+data1 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3;
+    output(variavel_int);
+    const constante_int: int = 2;
+    output(constante_int);
+    let variavel_int2: int = 5;
+    output(variavel_int2);
+}
+'''
+
+#entrada de teste para decl attr e output de variavel float
+data2 = '''
+main {
+    let variavel_float: float;
+    variavel_float = 3;
+    output(variavel_float);
+    const constante_float: float = 2.0;
+    output(constante_float);
+    let variavel_float2: float;
+    input(variavel_float2);
+    output(variavel_float2);
+}
+'''
+
+#entrada de teste para decl attr e output de variavel char
+data3 = '''
+main {
+    let variavel_char: char;
+    variavel_char = '3';
+    output(variavel_char);
+    const constante_char: char = 'a';
+    output(constante_char);
+    let variavel_char2: char;
+    input(variavel_char2);
+    output(variavel_char2);
+}
+'''
+
+#entrada de teste para attr com operacao aritmetica
+data4 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3 + 4;
+    output(variavel_int);
+    let variavel_int2: int;
+    variavel_int2 = (variavel_int * 4) + 3;
+    output(variavel_int2);
+}
+'''
+
+#entrada de teste para cond logical e relacional verdadeiro
+data5 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3 + 4;
+    let variavel_char: char;
+    variavel_char = '3';
+    if(variavel_int == 7 && variavel_char == '3'){
+        variavel_int = variavel_int - 7;
+        output(variavel_int);
+    }
+}
+'''
+
+#entrada de teste para cond logical e relacional falso com else
+data6 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3 + 4;
+    let variavel_char: char;
+    variavel_char = '3';
+    if(variavel_int == 7 && variavel_char == '2'){
+        variavel_int = variavel_int - 7;
+        output(variavel_int);
+    }else{
+        output(variavel_char);
+    }
+}
+'''
+
+#entrada de teste para while
+data7 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3;
+    while(variavel_int > 0 ){
+        output(variavel_int);
+        variavel_int = variavel_int - 1;
+    }
+}
+'''
+
+#entrada de teste para for
+data8 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3;
+    for(variavel_int = 3; variavel_int > 0; variavel_int = variavel_int - 1 ){
+        output(variavel_int);
+        variavel_int = variavel_int + 1;
+    }
+}
+'''
+
+print('ENTRADA: ', data8)
+
+result = parser.parse(data8)
+
+
 
 ######################################  Codigo antigo ####################################
 # def p_decl(p):
@@ -580,165 +709,5 @@ def p_term_par_expr(p):
 #     while p[3]:
 #         p[0] = p[6]
 
-def p_error(t):
-    if t is not None :
-        print("Syntax error at '%s'" % t.value)
-
-
-
-parser = yacc.yacc()
-
-print('\n----- fim codigo -----\n')
-#entrada de teste para output de string comum
-data0 = '''
-    main {
-        output("Hello");
-        output("World");
-    }
-'''
-
-#entrada de teste para decl attr e output de variavel inteiras
-data1 = '''
-main {
-    let variavel_int: int;
-    variavel_int = 3;
-    output(variavel_int);
-    const constante_int: int = 2;
-    output(constante_int);
-    let variavel_int2: int = 5;
-    output(variavel_int2);
-}
-'''
-
-#entrada de teste para decl attr e output de variavel float
-data2 = '''
-main {
-    let variavel_float: float;
-    variavel_float = 3;
-    output(variavel_float);
-    const constante_float: float = 2.0;
-    output(constante_float);
-    let variavel_float2: float;
-    input(variavel_float2);
-    output(variavel_float2);
-}
-'''
-
-#entrada de teste para decl attr e output de variavel char
-data3 = '''
-main {
-    let variavel_char: char;
-    variavel_char = '3';
-    output(variavel_char);
-    const constante_char: char = 'a';
-    output(constante_char);
-    let variavel_char2: char;
-    input(variavel_char2);
-    output(variavel_char2);
-}
-'''
-
-#entrada de teste para attr com operacao aritmetica
-data4 = '''
-main {
-    let variavel_int: int;
-    variavel_int = 3 + 4;
-    output(variavel_int);
-    let variavel_int2: int;
-    variavel_int2 = (variavel_int * 4) + 3;
-    output(variavel_int2);
-}
-'''
-
-#entrada de teste para cond logical e relacional verdadeiro
-data5 = '''
-main {
-    let variavel_int: int;
-    variavel_int = 3 + 4;
-    let variavel_char: char;
-    variavel_char = '3';
-    if(variavel_int == 7 && variavel_char == '3'){
-        variavel_int = variavel_int - 7;
-        output(variavel_int);
-    }
-}
-'''
-
-#entrada de teste para cond logical e relacional falso com else
-data6 = '''
-main {
-    let variavel_int: int;
-    variavel_int = 3 + 4;
-    let variavel_char: char;
-    variavel_char = '3';
-    if(variavel_int == 7 && variavel_char == '2'){
-        variavel_int = variavel_int - 7;
-        output(variavel_int);
-    }else{
-        output(variavel_char);
-    }
-}
-'''
-
-#entrada de teste para while
-data7 = '''
-main {
-    let variavel_int: int;
-    variavel_int = 3;
-    while(variavel_int > 0 ){
-        output(variavel_int);
-        variavel_int = variavel_int - 1;
-    }
-}
-'''
-
-#entrada de teste para for
-data8 = '''
-main {
-    let variavel_int: int;
-    variavel_int = 3;
-    for(variavel_int = 3; variavel_int > 0; variavel_int = variavel_int - 1 ){
-        output(variavel_int);
-        variavel_int = variavel_int + 1;
-    }
-}
-'''
-
-# data1 = '''
-# main {
-#     let variavel_char: char = '5';
-#     output(variavel_char);
-#     const PI: float = 3.14;
-#     output(PI);
-#     output("texto");
-#     let variavel_apenas_declarada: char;
-#     variavel_apenas_declarada = '4';
-#     output(variavel_apenas_declarada);
-#     let variavel_atribuida_por_input: int;
-#     input(variavel_atribuida_por_input);
-#     output(variavel_atribuida_por_input);
-# '''
-
-# data2 = '''
-# main {
-#     let variavel: int = 4;
-#     if(variavel == 4){
-#         output(variavel);
-#     }
-# }
-# '''
-
-# data3 = '''
-# main {
-#     let variavel: int = 5;
-#     while(variavel == 4){
-#         variavel = 4;
-#         output(variavel);
-#     }
-# }
-# '''
-
-print('ENTRADA: ', data8)
-
-result = parser.parse(data8)
-
+##
+######################################  Codigo antigo ####################################
