@@ -88,7 +88,6 @@ def t_VAR(t):
 
     return t
 
-
 t_ignore = ' \t'
 
 
@@ -105,34 +104,156 @@ def t_error(t):
 # constroi o analisador lexico
 lexer = lex.lex()
 
+#entrada de teste para output de string comum
+data0 = '''
+    main {
+        output("Hello");
+        output("World");
+    }
+'''
+
+#entrada de teste para decl attr e output de variavel inteiras
 data1 = '''
 main {
-    let variavel_char: char = '5';
-    output(variavel_char);
-    const PI: float = 3.14;
-    output(PI);
-    output("texto");
-    let variavel_apenas_declarada: char;
-    variavel_apenas_declarada = '4';
-    output(variavel_apenas_declarada);
-    let variavel_atribuida_por_input: int;
-    input(variavel_atribuida_por_input);
-    output(variavel_atribuida_por_input);
+    let variavel_int: int;
+    variavel_int = 3;
+    output(variavel_int);
+    const constante_int: int = 2;
+    output(constante_int);
+    let variavel_int2: int = 5;
+    output(variavel_int2);
 }
 '''
 
+#entrada de teste para decl attr e output de variavel float
 data2 = '''
 main {
-    let variavel: int = 5;
-    if(variavel == 5){
-        variavel = 3 + 4;
-        output(variavel)
+    let variavel_float: float;
+    variavel_float = 3;
+    output(variavel_float);
+    const constante_float: float = 2.0;
+    output(constante_float);
+    let variavel_float2: float;
+    input(variavel_float2);
+    output(variavel_float2);
+}
+'''
+
+#entrada de teste para decl attr e output de variavel char
+data3 = '''
+main {
+    let variavel_char: char;
+    variavel_char = '3';
+    output(variavel_char);
+    const constante_char: char = 'a';
+    output(constante_char);
+    let variavel_char2: char;
+    input(variavel_char2);
+    output(variavel_char2);
+}
+'''
+
+#entrada de teste para attr com operacao aritmetica
+data4 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3 + 4;
+    output(variavel_int);
+    let variavel_int2: int;
+    variavel_int2 = (variavel_int * 4) + 3;
+    output(variavel_int2);
+}
+'''
+
+#entrada de teste para cond logical e relacional verdadeiro
+data5 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3 + 4;
+    let variavel_char: char;
+    variavel_char = '3';
+    if(variavel_int == 7 && variavel_char == '3'){
+        variavel_int = variavel_int - 7;
+        output(variavel_int);
     }
 }
 '''
 
+#entrada de teste para cond logical e relacional falso com else
+data6 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3 + 4;
+    let variavel_char: char;
+    variavel_char = '3';
+    if(variavel_int == 7 && variavel_char == '2'){
+        variavel_int = variavel_int - 7;
+        output(variavel_int);
+    }else{
+        output(variavel_char);
+    }
+}
+'''
 
-lexer.input(data2)
+#entrada de teste para while
+data7 = '''
+main {
+    let variavel_int: int;
+    variavel_int =3;
+    while(variavel_int > 0 ){
+        output(variavel_int);
+        variavel_int = variavel_int - 1;
+    }
+}
+'''
+
+#entrada de teste para for
+data8 = '''
+main {
+    let variavel_int: int;
+    variavel_int = 3;
+    for(i=3; i>0; i=i-1){
+        output(variavel_int);
+        variavel_int = variavel_int - 1;
+    }
+}
+'''
+# data1 = '''
+# main {
+#     let variavel_char: char = '5';
+#     output(variavel_char);
+#     const PI: float = 3.14;
+#     output(PI);
+#     output("texto");
+#     let variavel_apenas_declarada: char;
+#     variavel_apenas_declarada = '4';
+#     output(variavel_apenas_declarada);
+#     let variavel_atribuida_por_input: int;
+#     input(variavel_atribuida_por_input);
+#     output(variavel_atribuida_por_input);
+# }
+# '''
+
+# data2 = '''
+# main {
+#     let variavel: int = 5;
+#     if(variavel == 5){
+#         variavel = 3 + 4;
+#         output(variavel)
+#     }
+# }
+# '''
+# data3 = '''
+# main {
+#     let variavel: int = 5;
+#     while(variavel == 5){
+#         variavel = 3 + 4;
+#         output(variavel)
+#     }
+# }
+# '''
+
+lexer.input(data8)
 
 while True:
     tok = lexer.token()
