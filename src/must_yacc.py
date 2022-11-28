@@ -321,7 +321,7 @@ def p_while(p):
     p[0] = f"while({p[3]}){{ \n {p[6]} \n }}"
 
 
-def p_exprs_no_semicolon(p):
+def p_exprs_for_no_semicolon(p):
     '''
     exprsfor : expr 
     '''
@@ -488,13 +488,11 @@ data8 = '''
 main {
     let variavel_int: int;
     variavel_int = 3;
-    for(variavel_int = 3; variavel_int > 0; variavel_int = variavel_int - 1 ){
+    for(variavel_int = 3; variavel_int > 0; variavel_int = variavel_int - 1 ) {
         output(variavel_int);
         variavel_int = variavel_int + 1;
     }
 }
 '''
 
-print('ENTRADA: ', data8)
-
-result = parser.parse(data8)
+result = parser.parse(data5)

@@ -89,6 +89,7 @@ def t_VAR(t):
 
     return t
 
+
 t_ignore = ' \t'
 
 
@@ -105,7 +106,7 @@ def t_error(t):
 # constroi o analisador lexico
 lexer = lex.lex()
 
-#entrada de teste para output de string comum
+# entrada de teste para output de string comum
 data0 = '''
     main {
         output("Hello");
@@ -113,7 +114,7 @@ data0 = '''
     }
 '''
 
-#entrada de teste para decl attr e output de variavel inteiras
+# entrada de teste para decl attr e output de variavel inteiras
 data1 = '''
 main {
     let variavel_int: int;
@@ -126,7 +127,7 @@ main {
 }
 '''
 
-#entrada de teste para decl attr e output de variavel float
+# entrada de teste para decl attr e output de variavel float
 data2 = '''
 main {
     let variavel_float: float;
@@ -140,7 +141,7 @@ main {
 }
 '''
 
-#entrada de teste para decl attr e output de variavel char
+# entrada de teste para decl attr e output de variavel char
 data3 = '''
 main {
     let variavel_char: char;
@@ -154,7 +155,7 @@ main {
 }
 '''
 
-#entrada de teste para attr com operacao aritmetica
+# entrada de teste para attr com operacao aritmetica
 data4 = '''
 main {
     let variavel_int: int;
@@ -166,7 +167,7 @@ main {
 }
 '''
 
-#entrada de teste para cond logical e relacional verdadeiro
+# entrada de teste para cond logical e relacional verdadeiro
 data5 = '''
 main {
     let variavel_int: int;
@@ -176,19 +177,11 @@ main {
     if(variavel_int == 7 && variavel_char == '3'){
         variavel_int = variavel_int - 7;
         output(variavel_int);
-    let variavel: int = 4;
-
-    if(variavel == 4) {
-        variavel = 3;
-        output(variavel);
-    } else {
-        variavel = 9;
-        output(variavel);
     }
 }
 '''
 
-#entrada de teste para cond logical e relacional falso com else
+# entrada de teste para cond logical e relacional falso com else
 data6 = '''
 main {
     let variavel_int: int;
@@ -204,11 +197,11 @@ main {
 }
 '''
 
-#entrada de teste para while
+# entrada de teste para while
 data7 = '''
 main {
     let variavel_int: int;
-    variavel_int =3;
+    variavel_int = 3;
     while(variavel_int > 0 ){
         output(variavel_int);
         variavel_int = variavel_int - 1;
@@ -216,14 +209,14 @@ main {
 }
 '''
 
-#entrada de teste para for
+# entrada de teste para for
 data8 = '''
 main {
     let variavel_int: int;
     variavel_int = 3;
-    for(i=3; i>0; i=i-1){
+    for(variavel_int = 3; variavel_int > 0; variavel_int = variavel_int - 1 ) {
         output(variavel_int);
-        variavel_int = variavel_int - 1;
+        variavel_int = variavel_int + 1;
     }
 }
 '''
