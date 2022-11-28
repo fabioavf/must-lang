@@ -1,12 +1,12 @@
 # Documentação
 
-- Adicionar o autômato dos relacionais e das operações aritméticas no trabalho teórico;
-- Adicionar um quadrado da palavra reservada “for” na árvore de derivação;
+Alguns detalhes sobre esse trabalho comparado ao inicial:
+
 - Para o trabalho prático, foi preciso gerar os tokens literais, como o LIT_CHAR, LIT_INT e o LIT_FLOAT, assim como os tokens unitários de operadores lógicos, aritméticas e relacionais;
-- Não foi possível gerar um comando de saída que intercalasse strings com variáveis na mesma expressão; (Ainda dá tempo de implementar)
+- Não foi possível gerar um comando de saída que intercalasse strings com variáveis na mesma expressão;
 - Variáveis constantes precisam ter valor atribuído quando forem declarados, pois ao traduzir para linguagem C, esta requer atribuição obrigatória;
 - As regras de produção mudaram significativamente, em algumas partes.
-- Foi necessário adicionar mais regras curtas, pois o analisador sintático, não conseguia acessar variáveis que ainda precisavam passar por mais uma produção.
+- Foi necessário adicionar mais regras curtas, pois o analisador sintático não conseguia acessar variáveis que ainda precisavam passar por mais uma produção.
 
 ## Novas produções:
 
